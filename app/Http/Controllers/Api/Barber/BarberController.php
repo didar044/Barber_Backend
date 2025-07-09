@@ -22,6 +22,9 @@ class BarberController extends Controller
      */
     public function store(Request $request)
     {
+
+        try {
+        \Log::info('Incoming request data:', $request->all());
         $validator=Validator::make($request->all(),[
                 'name' => 'required|string|max:100',
                 'father_name' => 'nullable|string|max:100',
@@ -39,6 +42,7 @@ class BarberController extends Controller
                 'hire_date' => 'nullable|date',
                 'shift_id' => 'required|exists:bar_shifts,id',
                 ]);
+        
         $barber = Barber::create([
                 'name' => $request->name,
                 'father_name' => $request->father_name,
@@ -65,6 +69,11 @@ class BarberController extends Controller
                 $barber->save();
             }
             return response()->json($barber);
+
+             } catch (\Exception $e) {
+        \Log::error('Product store error: '.$e->getMessage());
+        return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+    }
     }
 
     /**
@@ -81,33 +90,35 @@ class BarberController extends Controller
 
    
     public function update(Request $request, string $id)
-{
+{     
+     try {
+        \Log::info('Incoming request data:', $request->all());
+    
     $barber = Barber::find($id);
-    if (!$barber) {
-        return response()->json(['message' => 'Barber not found'], 404);
+
+   
+
+    $validator=Validator::make($request->all(),[
+                'name' => 'required|string|max:100',
+                'father_name' => 'nullable|string|max:100',
+                'mother_name' => 'nullable|string|max:100',
+                'religion' => 'nullable|string|max:100',
+                'gender' => 'nullable|string|max:100',
+                'photo' => 'nullable|string',
+                'blood_roupe' => 'nullable|string|max:10',
+                'address' => 'nullable|string',
+                'mobile_number' => 'required|string|max:20',
+                'email' => 'nullable|email|max:100',
+                'nid_num' => 'nullable|string|max:30',
+                'specialization' => 'nullable|string|max:100',
+                'exprence_years' => 'nullable|integer|min:0',
+                'hire_date' => 'nullable|date',
+                'shift_id' => 'required|exists:shifts,id',
+                ]);
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
     }
-
-    // $validator = Validator::make($request->all(), [
-    //     'name' => 'required|string|max:100',
-    //     'father_name' => 'nullable|string|max:100',
-    //     'mother_name' => 'nullable|string|max:100',
-    //     'photo' => 'nullable|file|image|max:2048',
-    //     'religion' => 'nullable|string|max:100',
-    //     'gender' => 'nullable|string|max:100',
-    //     'blood_roupe' => 'nullable|string|max:10',
-    //     'address' => 'nullable|string',
-    //     'mobile_number' => 'required|string|max:20',
-    //     'email' => 'nullable|email|max:100',
-    //     'nid_num' => 'required|string|max:30',
-    //     'specialization' => 'nullable|string|max:100',
-    //     'exprence_years' => 'required|integer|min:0',
-    //     'hire_date' => 'required|date',
-    //     'shift_id' => 'required|exists:bar_shifts,id',
-    // ]);
-
-    // if ($validator->fails()) {
-    //     return response()->json(['errors' => $validator->errors()], 422);
-    // }
 
     $barber->update([
         'name' => $request->name,
@@ -138,6 +149,10 @@ class BarberController extends Controller
     }
 
     return response()->json($barber);
+      } catch (\Exception $e) {
+        \Log::error('Product store error: '.$e->getMessage());
+        return response()->json(['message' => 'Server error', 'error' => $e->getMessage()], 500);
+    }
 }
 
 
