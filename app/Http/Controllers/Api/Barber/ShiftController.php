@@ -20,6 +20,9 @@ class ShiftController extends Controller
     {
         $shifts=new Shift();
         $shifts->name=$request->name;
+        $shifts->start_time=$request->start_time;
+        $shifts->end_time=$request->end_time;
+        $shifts->name=$request->name;
         $shifts->save();
         return response()->json($shifts,201);
     }
@@ -36,6 +39,8 @@ class ShiftController extends Controller
     {
          $shift=Shift::findOrFail($id);
          $shift->name=$request->name;
+        $shift->start_time=$request->start_time;
+        $shift->end_time=$request->end_time;
          $shift->save();
          return response()->json($shift,200);
     }
