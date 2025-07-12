@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Service\ServiceController;
 use App\Http\Controllers\Api\Customer\CustomerController;
 use App\Http\Controllers\Api\Appointment\AppointmentController;
 use App\Http\Controllers\Api\Appointment\Appointment_ServiceController;
+use App\Http\Controllers\Api\Payment\PaymentController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,6 +24,7 @@ Route::apiResource('customers',CustomerController::class);
 Route::apiResource('appointments',AppointmentController::class);
 Route::apiResource('appointmentservices',Appointment_ServiceController::class);
 Route::patch('/appointments/{id}/status', [AppointmentController::class, 'updateStatus']);
+Route::apiResource('payments',PaymentController::class);
 
 
 

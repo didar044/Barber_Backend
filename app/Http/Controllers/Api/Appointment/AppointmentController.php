@@ -159,14 +159,20 @@ public function store(Request $request)
     }
 
     // DELETE: /api/appointments/{id}
-    public function destroy($id)
+  public function destroy($id)
     {
         $appointment = Appointment::find($id);
+
         if (!$appointment) {
             return response()->json(['message' => 'Appointment not found'], 404);
         }
 
+        // Delete related services first
+        Appointment_Service::where('appointment_id', $id)->delete();
+
+        // Then delete the appointment itself
         $appointment->delete();
+
         return response()->json(['message' => 'Appointment deleted successfully']);
     }
 
