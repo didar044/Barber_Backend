@@ -104,7 +104,7 @@ class BarberController extends Controller
                 'mother_name' => 'nullable|string|max:100',
                 'religion' => 'nullable|string|max:100',
                 'gender' => 'nullable|string|max:100',
-                'photo' => 'nullable|string',
+                'photo' => 'nullable',
                 'blood_roupe' => 'nullable|string|max:10',
                 'address' => 'nullable|string',
                 'mobile_number' => 'required|string|max:20',
