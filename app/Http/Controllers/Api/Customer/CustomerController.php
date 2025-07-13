@@ -114,7 +114,7 @@ class CustomerController extends Controller
             if($request->hasFile('photo')){
                 $imagename = $customer->id . '.' . $request->photo->extension();
                 $request->photo->move(public_path('image/customers_img'), $imagename);
-                $customer->photo = 'image/barber_img/' . $imagename;
+                $customer->photo = 'image/customers_img/' . $imagename;
                 $customer->save();
             }
         return response()->json($customer);
