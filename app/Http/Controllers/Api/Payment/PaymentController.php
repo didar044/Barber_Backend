@@ -15,7 +15,7 @@ class PaymentController extends Controller
     public function index()
     {
        
-        $payments = Payment::with('appointment.customer','appointment.services','appointment.barber')->paginate(10);
+        $payments = Payment::with('appointment.customer','appointment.services','appointment.barber')->latest('id')->paginate(10);
         return response()->json($payments);
     }
 
@@ -49,10 +49,11 @@ class PaymentController extends Controller
 
     
     public function show(string $id)
-    {
-        $payment = Payment::find($id);
-        return response()->json($payment);
-    }
+            {
+                $payment = Payment::with('appointment.customer','appointment.services','appointment.barber')->findOrFail($id);
+                return response()->json($payment); 
+            }
+
 
     /**
      * Update the specified payment in storage.
