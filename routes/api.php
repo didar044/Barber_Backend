@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\Payment\PaymentController;
 use App\Http\Controllers\Api\Expense\ExpenseCategorieController;
 use App\Http\Controllers\Api\Expense\ExpenseController;
 use App\Http\Controllers\Api\FeedBack\FeedBackController;
+use App\Http\Controllers\Api\Dashboard\DashboardController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -31,4 +32,5 @@ Route::apiResource('payments',PaymentController::class);
 Route::apiResource('expensecategories',ExpenseCategorieController::class);
 Route::apiResource('expenses',ExpenseController::class);
 Route::apiResource('feedbacks',FeedBackController::class);
+Route::apiResource('dashboards',DashboardController::class);
 
